@@ -23,28 +23,27 @@ pip install pytube Pillow requests
 ```
 git clone https://github.com/BlazeeH/ytb-vid
 ```
-
-2. **Navigate to the Project Directory:** 
+**Navigate to the Project Directory:** 
 ```
 cd ytb-vid
 ```
-3. **Run the Application:** 
+**Run the Application:** 
 ```
 python mnm.py
 ```
-4. **Enter YouTube URL:**
+1. **Enter YouTube URL:**
 - In the provided entry field, enter the URL of the YouTube video you want to download.
 - Click on the "Search Video" button to retrieve video information.
 
-5. **Select Resolution:**
+2. **Select Resolution:**
 - After searching for the video, a list of available resolutions will be displayed in the dropdown menu.
 - Select the desired resolution from the dropdown menu.
 
-6. **Download Video:**
+3. **Download Video:**
 - Once you have selected the resolution, click on the "Download Selected" button to start downloading the video.
 - The downloaded video will be saved in the same directory as the application.
 
-7. **Error Handling:**
+4. **Error Handling:**
 - If there are any errors during the process, error messages will be displayed in a pop-up window.
 
 ## Notes
