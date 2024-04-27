@@ -39,7 +39,7 @@ function generateFooter() {
         <!-- Copyright -->
         <div class="text-center p-3" style="background-color: none">
             © 2024 Copyright:
-            <a class="text-white" href="http://BlazeeH.github.io">http://BlazeeH.github.io</a>
+            <a class="text-white" href="https://blazeeh.github.io/ytb-vid/">https://blazeeh.github.io</a>
         </div>
     </div>
 `;
