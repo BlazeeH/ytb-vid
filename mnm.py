@@ -7,7 +7,7 @@ import requests
 from io import BytesIO
 import re
 
-
+# Xử lý sự kiện tìm kiếm video
 def search_video_info():
     url = url_entry.get()
     try:
@@ -16,14 +16,14 @@ def search_video_info():
         # Update video thumbnail
         response = requests.get(yt.thumbnail_url)
         img = Image.open(BytesIO(response.content))
-        img.thumbnail((340, 200), Image.Resampling.LANCZOS)
+        img.thumbnail((200, 200), Image.Resampling.LANCZOS)
         img = ImageTk.PhotoImage(img)
         video_image.config(image=img)
         video_image.image = img
         
         # Update video information
         global youtube_title
-        video_info.config(text=f"Title: {yt.title}\nDuration: {yt.length // 60}:{yt.length % 60:02d}\nViews: {yt.views}")
+        video_info.config(text=f"Title: {yt.title}\n  Duration: {yt.length // 60}:{yt.length % 60:02d}  \nViews: {yt.views}")
         youtube_title = yt.title
         res = [stream.resolution for stream in yt.streams.filter(progressive=True).order_by('resolution')]
         res_combobox['values'] = res
@@ -95,11 +95,11 @@ search_button.grid(row=0, column=2, padx=(0, 10))
 video_frame = tk.Frame(root)
 video_frame.pack(pady=(10, 0))
 
-video_image = tk.Label(video_frame)
-video_image.pack()
+video_image = tk.Label(video_frame,bg="lightblue")
+video_image.grid(row=0, column=0, padx=(10, 5))
 
-video_info = tk.Label(video_frame, text="", font=("Arial", 12))
-video_info.pack()
+video_info = tk.Label(video_frame, text="", font=("Arial", 12),anchor="w")
+video_info.grid(row=0, column=1, padx=(5, 10))
 
 # Resolution Combobox Frame
 res_frame = tk.Frame(root)

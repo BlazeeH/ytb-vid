@@ -9,15 +9,7 @@ import re
 
 
 def search_video_info(entry,i):
-    # Video Information Frame
-    video_frame = tk.Frame(content_frame)
-    video_frame.grid(row=i+1, column=0, padx=(10, 0), pady=(10, 0), sticky="w")
-
-    video_image = tk.Label(video_frame)
-    video_image.grid(row=i+1, column=0, padx=(10, 5), pady=(20, 0))
-
-    video_info = tk.Label(video_frame, text="", font=("Arial", 12))
-    video_info.grid(row=i+1, column=2)
+    
 
     url = entry.get()
     try:
@@ -88,7 +80,7 @@ def transform_youtube_title(title):
 
 root = tk.Tk()
 root.title("YouTube Video Downloader")
-root.geometry("700x520")
+root.geometry("800x520")
 
 # Tạo thanh cuộn dọc
 scrollbar = ttk.Scrollbar(root)
@@ -110,12 +102,21 @@ canvas.create_window((0, 0), window=content_frame, anchor="nw")
 
 def create_URL_Entry(num):
     for i in range(num):
+        # Video Information Frame
+        video_image = tk.Label(content_frame)
+        video_image.grid(row=i+1, column=0, padx=(10, 5), pady=(20, 0))
+
+        video_info = tk.Label(content_frame, text="", font=("Arial", 12))
+        video_info.grid(row=i+1, column=2)
+
         url_label = tk.Label(content_frame, text="Enter YouTube URL:", font=("Arial", 12))
         url_label.grid(row=i, column=0, padx=(10, 5), pady=(20, 0))
         url_entry = tk.Entry(content_frame, width=40, font=("Arial", 12))
         url_entry.grid(row=i, column=1, padx=(5, 10), pady=(20, 0))
         search_button = tk.Button(content_frame, text="Search Video", command=lambda entry=url_entry : search_video_info(entry,i), font=("Arial", 12))
         search_button.grid(row=i, column=2, padx=(0, 10), pady=(20, 0))
+
+        
 
 create_URL_Entry(5)  # Thử nghiệm với số lượng entry nhiều hơn để thấy thanh cuộn hoạt động
 
