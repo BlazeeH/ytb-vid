@@ -78,26 +78,26 @@ def delete_url_entry(
 
 
 def add_url_entry():
-    new_url_entry = tk.Entry(url_frame, width=40, font=("Arial", 12))
+    new_url_entry = tk.Entry(scrollable_frame, width=40, font=("Arial", 12))
     new_url_entry.grid(row=len(url_entry_boxes) + 1, column=1, padx=(5, 10), pady=5)
     url_entry_boxes.append(new_url_entry)
 
-    new_video_info_label = tk.Label(url_frame, text="", font=("Arial", 12))
+    new_video_info_label = tk.Label(scrollable_frame, text="", font=("Arial", 12))
     new_video_info_label.grid(row=len(url_entry_boxes), column=2, padx=(0, 10))
     video_info_labels.append(new_video_info_label)
 
-    new_video_image = tk.Label(url_frame)
+    new_video_image = tk.Label(scrollable_frame)
     new_video_image.grid(row=len(url_entry_boxes), column=3, padx=(0, 10))
     video_images.append(new_video_image)
 
     new_res_combobox = ttk.Combobox(
-        url_frame, width=10, state="readonly", font=("Arial", 12)
+        scrollable_frame, width=10, state="readonly", font=("Arial", 12)
     )
     new_res_combobox.grid(row=len(url_entry_boxes), column=4, padx=(5, 10))
     res_comboboxes.append(new_res_combobox)
 
     delete_button = tk.Button(
-        url_frame,
+        scrollable_frame,
         text="Delete",
         command=lambda: delete_url_entry(
             new_url_entry,
@@ -113,7 +113,7 @@ def add_url_entry():
     delete_buttons.append(delete_button)
 
     search_button = tk.Button(
-        url_frame,
+        scrollable_frame,
         text="Search Video",
         command=lambda: search_video_info(
             new_url_entry.get(), new_video_info_label, new_video_image, new_res_combobox
@@ -126,7 +126,7 @@ def add_url_entry():
 
 def create_search_button(url_entry, video_info_label, video_image, res_combobox):
     search_button = tk.Button(
-        url_frame,
+        scrollable_frame,
         text="Search Video",
         command=lambda: search_video_info(
             url_entry.get(), video_info_label, video_image, res_combobox
@@ -143,9 +143,37 @@ root.geometry("1000x520")
 
 # URL Entry Frame
 url_frame = tk.Frame(root)
-url_frame.pack(pady=(20, 0))
+url_frame.pack(pady=(20, 0), fill=tk.BOTH, expand=True)
 
-url_label = tk.Label(url_frame, text="Enter YouTube URLs:", font=("Arial", 12))
+# Create a scrollbar widget
+scrollbar = tk.Scrollbar(url_frame, orient="vertical")
+scrollbar.pack(side="right", fill="y")
+
+# Create a canvas to contain the scrollable frame
+canvas = tk.Canvas(url_frame, yscrollcommand=scrollbar.set)
+canvas.pack(side="left", fill="both", expand=True)
+
+# Create a scrollable frame to contain the URL entry frame
+scrollable_frame = tk.Frame(canvas)
+scrollable_frame.pack(fill="both", expand=True)
+
+# Configure the scrollbar to scroll the canvas
+scrollbar.config(command=canvas.yview)
+canvas.config(yscrollcommand=scrollbar.set)
+
+# Add the scrollable frame to the canvas
+canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+
+
+def configure_scroll_region(event):
+    canvas.configure(scrollregion=canvas.bbox("all"))
+
+
+# Add an event binding to update the scroll region when the frame size changes
+scrollable_frame.bind("<Configure>", configure_scroll_region)
+
+
+url_label = tk.Label(scrollable_frame, text="Enter YouTube URLs:", font=("Arial", 12))
 url_label.grid(row=0, column=0, padx=(10, 5))
 
 url_entry_boxes = []
@@ -156,21 +184,23 @@ delete_buttons = []
 search_buttons = []
 
 # Create the first URL entry
-url_entry = tk.Entry(url_frame, width=40, font=("Arial", 12))
+url_entry = tk.Entry(scrollable_frame, width=40, font=("Arial", 12))
 url_entry.grid(row=0, column=1, padx=(5, 10))
 url_entry_boxes.append(url_entry)
 
-video_info_label = tk.Label(url_frame, text="", font=("Arial", 12))
+video_info_label = tk.Label(scrollable_frame, text="", font=("Arial", 12))
 video_info_label.grid(
     row=0, column=2, padx=(0, 10), sticky="w"
 )  # Set sticky="w" to align the label to the left
 video_info_labels.append(video_info_label)
 
-video_image = tk.Label(url_frame)
+video_image = tk.Label(scrollable_frame)
 video_image.grid(row=0, column=3, padx=(0, 10))
 video_images.append(video_image)
 
-res_combobox = ttk.Combobox(url_frame, width=10, state="readonly", font=("Arial", 12))
+res_combobox = ttk.Combobox(
+    scrollable_frame, width=10, state="readonly", font=("Arial", 12)
+)
 res_combobox.grid(row=0, column=4, padx=(5, 10))
 res_comboboxes.append(res_combobox)
 
@@ -179,13 +209,14 @@ create_search_button(
 )  # Add "Search Video" button for the first URL entry
 
 add_url_button = tk.Button(
-    url_frame, text="Add URL", command=add_url_entry, font=("Arial", 12)
+    scrollable_frame, text="Add URL", command=add_url_entry, font=("Arial", 12)
 )
 add_url_button.grid(row=1, column=1, padx=(5, 10), pady=5)
 
 # Add a label to display download status
 download_label = tk.Label(root, text="", font=("Arial", 12))
 download_label.pack(pady=(10, 0))
+
 
 # Download Button
 download_button = tk.Button(
