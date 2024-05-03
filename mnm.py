@@ -1,11 +1,19 @@
 import os
+from pathlib import Path
 import tkinter as tk
-from tkinter import ttk, messagebox, filedialog
+from tkinter import PhotoImage, ttk, messagebox, filedialog
 from pytube import YouTube
 from PIL import Image, ImageTk
 import requests
 from io import BytesIO
 import re
+
+OUTPUT_PATH = Path(__file__).parent
+ASSETS_PATH = OUTPUT_PATH / Path(r"assets/image")
+
+
+def relative_to_assets(path: str) -> Path:
+    return ASSETS_PATH / Path(path)
 
 # Xử lý sự kiện tìm kiếm video
 def search_video_info():
@@ -96,8 +104,12 @@ search_button.grid(row=0, column=2, padx=(0, 10))
 video_frame = tk.Frame(root)
 video_frame.pack(pady=(10, 0))
 
-video_image = tk.Label(video_frame,bg="lightblue")
+
+video_image = tk.Label(video_frame,bg="lightblue",anchor="w")
 video_image.pack()
+image_image_3 = PhotoImage(
+    file=relative_to_assets("sgu_logo.png")).subsample(3,3)
+video_image.config(image=image_image_3)
 
 video_info = tk.Label(video_frame, text="", font=("Arial", 12),anchor="w")
 video_info.pack()

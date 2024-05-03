@@ -84,11 +84,11 @@ root.geometry("800x520")
 
 # Tạo thanh cuộn dọc
 scrollbar = ttk.Scrollbar(root)
-scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+scrollbar.pack(side="right", fill="y")
 
 # Tạo một khu vực có thể cuộn
 canvas = tk.Canvas(root, yscrollcommand=scrollbar.set)
-canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+canvas.pack(side="left", fill="both", expand=True)
 
 # Thiết lập thanh cuộn để lắng nghe sự kiện di chuyển của khu vực có thể cuộn
 scrollbar.config(command=canvas.yview)
@@ -118,7 +118,7 @@ def create_URL_Entry(num):
 
         
 
-create_URL_Entry(5)  # Thử nghiệm với số lượng entry nhiều hơn để thấy thanh cuộn hoạt động
+create_URL_Entry(15)  # Thử nghiệm với số lượng entry nhiều hơn để thấy thanh cuộn hoạt động
 
 
 
