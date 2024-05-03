@@ -23,7 +23,8 @@ def search_video_info():
         
         # Update video information
         global youtube_title
-        video_info.config(text=f"Title: {yt.title}\n  Duration: {yt.length // 60}:{yt.length % 60:02d}  \nViews: {yt.views}")
+        video_info.config(text=f"Title: {yt.title}")
+        video_duration.config(text=f"Duration: {yt.length // 60}:{yt.length % 60:02d}  \nViews: {yt.views}")
         youtube_title = yt.title
         res = [stream.resolution for stream in yt.streams.filter(progressive=True).order_by('resolution')]
         res_combobox['values'] = res
@@ -96,10 +97,13 @@ video_frame = tk.Frame(root)
 video_frame.pack(pady=(10, 0))
 
 video_image = tk.Label(video_frame,bg="lightblue")
-video_image.grid(row=0, column=0, padx=(10, 5))
+video_image.pack()
 
 video_info = tk.Label(video_frame, text="", font=("Arial", 12),anchor="w")
-video_info.grid(row=0, column=1, padx=(5, 10))
+video_info.pack()
+
+video_duration = tk.Label(video_frame, text="", font=("Arial", 12),anchor="w")
+video_duration.pack()
 
 # Resolution Combobox Frame
 res_frame = tk.Frame(root)
